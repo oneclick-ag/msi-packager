@@ -48,36 +48,36 @@ function installerFor (components, options) {
       ]),
 
       options.runAfter ? el('Property', {
-	Id: "cmd",
-	Value: "cmd.exe"
+        Id: "cmd",
+        Value: "cmd.exe"
       }) : "",
 
       options.runAfter ? el('CustomAction', {
-	  Id: "LaunchApplication",
-	  ExeCommand: "/c start \"\" \"%programfiles%\\"+options.name+"\\"+options.executable+"\"",
-	  Execute: "",
-	  Property: "cmd",
-	  Impersonate: "yes"
+        Id: "LaunchApplication",
+        ExeCommand: "/c start \"\" \"%programfiles%\\"+options.name+"\\"+options.executable+"\"",
+        Execute: "",
+        Property: "cmd",
+        Impersonate: "yes"
       }) : "",
 
       el('InstallExecuteSequence', [
         el('RemoveExistingProducts', {
-          Before: "InstallInitialize" 
+          Before: "InstallInitialize"
         }),
-	options.runAfter ? el('Custom', {
-	  Action: 'LaunchApplication',
-	  After: 'InstallFinalize'
-	}, ["NOT Installed"]) : ""
+        options.runAfter ? el('Custom', {
+          Action: 'LaunchApplication',
+          After: 'InstallFinalize'
+        }, ["NOT Installed"]) : ""
       ]),
 
-      el('CustomAction', {
-	Id: "LaunchInstalledExe",
-	FileKey: "mainExecutableFile", // what goes here?
-	ExeCommand: "",                // and here?
-	Execute: "immediate",
-	Impersonate: "yes",
-	Return: "asyncNoWait"
-      }),
+      options.runAfter ? el('CustomAction', {
+        Id: "LaunchInstalledExe",
+        FileKey: "mainExecutableFile", // what goes here?
+        ExeCommand: "",                // and here?
+        Execute: "immediate",
+        Impersonate: "yes",
+        Return: "asyncNoWait"
+      }) : "",
 
       el('Package', {
         InstallerVersion: "200",
@@ -103,11 +103,11 @@ function installerFor (components, options) {
       }),
 
       el('Directory', {
-        Id: 'TARGETDIR', 
+        Id: 'TARGETDIR',
         Name: 'SourceDir'
       }, [
         el('Directory', {
-          Id: getProgramsFolder(options), 
+          Id: getProgramsFolder(options),
         }, [
           el('Directory', {
             Id: 'INSTALLDIR',
@@ -152,13 +152,13 @@ function getComponents (path, options, cb) {
         } else {
           var id = escapeId(subPath)
           ids.push(id)
-          
+
           entry = entry.replace(new RegExp('\\$', 'g'), '$$$$')
           var items = [
             el('File', {
               Id: id,
               Source: join(fullPath, entry),
-              Name: entry 
+              Name: entry
             })
           ]
 
