@@ -17,7 +17,7 @@ const writeXml = async (options) => {
   return path;
 };
 
-export default async (options, cb) => {
+module.exports = async (options, cb) => {
   // options:
   //  source
   //  output

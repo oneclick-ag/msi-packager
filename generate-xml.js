@@ -210,7 +210,7 @@ const getComponents = async (path, options, cb) => {
   });
 };
 
-export default async (options, cb) => {
+module.exports = async (options, cb) => {
   await getComponents('.', options, (err, components, ids) => {
     if (err) {
       return cb(err);
