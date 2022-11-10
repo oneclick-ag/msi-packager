@@ -32,7 +32,11 @@ export default async (options, cb) => {
 
   const xmlPath = await writeXml(options);
 
-  const args = [xmlPath, '-o', options.output, '--ext', 'ui'];
+  const args = [xmlPath, '-o', options.output];
+
+  if (options.enableUi) {
+    args.push('--ext', 'ui');
+  }
 
   if (options.arch) {
     args.push('--arch', options.arch);

@@ -11,6 +11,7 @@ const options = {
   runAfterInstall: 'start.cmd',
   // runBeforeUninstall: 'delete.cmd',
   arch: 'x64',
+  // enableUi: true,
 };
 
 createMsi(options, (err) => {

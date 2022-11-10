@@ -102,9 +102,9 @@ const installerFor = (components, options) => el('Wix', {
       EmbedCab: 'yes',
     }),
 
-    el('UIRef', {
+    options.enableUi ? el('UIRef', {
       Id: 'WixUI_Minimal',
-    }),
+    }) : '',
 
     el('Icon', {
       Id: 'icon.ico',
