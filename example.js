@@ -1,18 +1,23 @@
-var createMsi = require('./')
+import createMsi from './index.js';
 
-var options = {
-  name: 'Loop Drop',
+const options = {
+  name: 'Oneclick Agent',
   upgradeCode: 'YOUR-GUID-HERE',
   version: '1.0.0',
-  manufacturer: 'loopjs.com',
-  source: '/Users/matt/Code/loop/loopjs-packager/build/Loop Drop-win32',
-  output: '/Users/matt/Code/loop/loopjs-packager/releases/Loop Drop v1.0.0.msi',
-  iconPath: '/Users/matt/Code/loop/loopjs-packager/icon.ico',
-  executable: 'Loop Drop.exe',
-  localInstall: true
-}
+  manufacturer: 'oneclick AG',
+  source: '/home/alexander/Documents/Agent packer/Oneclick Agent',
+  output: '/home/alexander/Documents/Agent packer/test.msi',
+  iconPath: '/home/alexander/Documents/Agent packer/icon.ico',
+  runAfterInstall: 'start.cmd',
+  // runBeforeUninstall: 'delete.cmd',
+  arch: 'x64',
+};
 
-createMsi(options, function (err) {
-  if (err) throw err
-  console.log('Outputed to ' + options.output)
-})
+createMsi(options, (err) => {
+  if (err) {
+    throw err;
+  }
+
+  // eslint-disable-next-line no-console
+  console.log(`Output to ${options.output}`);
+});

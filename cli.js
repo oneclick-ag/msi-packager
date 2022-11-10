@@ -1,82 +1,86 @@
 #!/usr/bin/env node
 
-var packageMsi = require('./')
-var path = require('path')
+import path from 'path';
+import nomnom from 'nomnom';
+import packageMsi from '.';
 
-var opts = require("nomnom")
-   .script("msi-packager")
-   .options({
+const opts = nomnom()
+  .script('msi-packager')
+  .options({
 
-    'source': {
+    source: {
       position: 0,
       help: 'Directory containing app to package',
-      required: true
+      required: true,
     },
 
-    'output': {
+    output: {
       position: 1,
       help: 'write output .msi to this path',
-      required: true
+      required: true,
     },
 
-    'name': {
+    name: {
       abbr: 'n',
-      required: true
+      required: true,
     },
-    
-    'version': {
+
+    version: {
       abbr: 'v',
       help: 'Specify application version',
-      required: true
+      required: true,
     },
 
-    'manufacturer': {
+    manufacturer: {
       abbr: 'm',
-      required: true
+      required: true,
     },
 
-    'arch': {
+    arch: {
       abbr: 'a',
-      help: 'Specify the target architecture: x86 or x64 (optional)'
+      help: 'Specify the target architecture: x86 or x64 (optional)',
     },
 
-    'upgradeCode': {
+    upgradeCode: {
       abbr: 'u',
       full: 'upgrade-code',
       help: 'Specify GUID to use for upgrading from other versions',
-      required: true
+      required: true,
     },
-    
-    'iconPath': {
+
+    iconPath: {
       abbr: 'i',
       full: 'icon',
       help: 'Specify an icon to use on shortcuts and installer',
-      required: true
+      required: true,
     },
 
-    'executable': {
+    executable: {
       abbr: 'e',
       help: 'Specify file to create shortcuts for',
-      required: true
+      required: true,
     },
 
-    'runAfter': {
+    runAfterInstall: {
       abbr: 'r',
-	flag: true,
+      flag: true,
       full: 'run-after',
-      help: 'Run the application after installation completes'
+      help: 'Run the application after installation completes',
     },
 
-    'localInstall': {
+    localInstall: {
       flag: true,
       full: 'local',
       help: 'Install per user (no administrator rights required)',
       abbr: 'l',
 
-    }
+    },
   }).parse();
 
-packageMsi(opts, function (err) {
-  if (err) throw err
-  console.log('Outputed to ' + path.resolve(opts.output))
-})
+packageMsi(opts, (err) => {
+  if (err) {
+    throw err;
+  }
+  // eslint-disable-next-line no-console
+  console.log(`Outputed to ${path.resolve(opts.output)}`);
+});

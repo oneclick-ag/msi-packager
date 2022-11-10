@@ -1,10 +1,24 @@
-var generateXml = require('./generate-xml')
-var execFile = require('child_process').execFile
-var temp = require("temp").track()
-var fs = require('fs')
+import { execFile } from 'child_process';
+import { promisify } from 'util';
+import temp from 'temp';
+import fs from 'fs/promises';
+import generateXml from './generate-xml.js';
 
-module.exports = function(options, cb) {
-  // options: 
+const tmpOpen = promisify(temp.open);
+const generateXmlPromises = promisify(generateXml);
+
+const writeXml = async (options) => {
+  const { path } = await tmpOpen('msi-packager');
+
+  const xml = await generateXmlPromises(options);
+
+  await fs.writeFile(path, xml);
+
+  return path;
+};
+
+export default async (options, cb) => {
+  // options:
   //  source
   //  output
   //  name
@@ -16,28 +30,13 @@ module.exports = function(options, cb) {
   //  executable
   //  localInstall
 
-  writeXml(options, function (err, path) {
-    var args = [path, '-o', options.output]
+  const xmlPath = await writeXml(options);
 
-    if (options.arch) {
-      args.push('--arch', options.arch)
-    }
+  const args = [xmlPath, '-o', options.output, '--ext', 'ui'];
 
-    execFile('wixl', args, cb)
-  })
-}
+  if (options.arch) {
+    args.push('--arch', options.arch);
+  }
 
-function writeXml(options, cb) {
-  temp.open('msi-packager', function(err, info) {
-    generateXml(options, function(err, xml) {
-      fs.write(info.fd, xml, function(err) {
-        if (err) return cb(err)
-        
-        fs.close(info.fd, function (err) {
-          if (err) return cb(err)
-          return cb(null, info.path)
-        })
-      })
-    })
-  })
-}
+  execFile('wixl', args, cb);
+};
