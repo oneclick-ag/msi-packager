@@ -1,7 +1,7 @@
-import fs from 'fs/promises';
-import { join } from 'path';
-import each from 'async-each';
-import el from './lib/hyperxml.js';
+const fs = require('fs/promises');
+const { join } = require('path');
+const each = require('async-each');
+const el = require('./lib/hyperxml.js');
 
 const getProgramsFolder = (options) => {
   if (options.localInstall) {

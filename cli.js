@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import path from 'path';
-import nomnom from 'nomnom';
-import packageMsi from '.';
+const path = require('path');
+const nomnom = require('nomnom');
+const packageMsi = require('.');
 
 const opts = nomnom()
   .script('msi-packager')

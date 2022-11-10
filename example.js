@@ -1,4 +1,4 @@
-import createMsi from './index.js';
+const createMsi = require('./index.js');
 
 const options = {
   name: 'Oneclick Agent',

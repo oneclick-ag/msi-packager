@@ -1,8 +1,8 @@
-import { execFile } from 'child_process';
-import { promisify } from 'util';
-import temp from 'temp';
-import fs from 'fs/promises';
-import generateXml from './generate-xml.js';
+const { execFile } = require('child_process');
+const { promisify } = require('util');
+const temp = require('temp');
+const fs = require('fs/promises');
+const generateXml = require('./generate-xml.js');
 
 const tmpOpen = promisify(temp.open);
 const generateXmlPromises = promisify(generateXml);
