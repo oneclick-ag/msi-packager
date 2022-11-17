@@ -1,5 +1,5 @@
-const { execFile } = require('child_process');
 const { promisify } = require('util');
+const execFile = promisify(require('child_process').execFile);
 const temp = require('temp');
 const fs = require('fs/promises');
 const generateXml = require('./generate-xml.js');
@@ -42,5 +42,5 @@ module.exports = async (options, cb) => {
     args.push('--arch', options.arch);
   }
 
-  execFile('wixl', args, cb);
+  return execFile('wixl', args, cb);
 };
