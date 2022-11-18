@@ -4,7 +4,7 @@ const temp = require('temp');
 const fs = require('fs/promises');
 const generateXml = require('./generate-xml.js');
 
-const tmpOpen = promisify(temp.open);
+const tmpOpen = promisify(temp.track().open);
 const generateXmlPromises = promisify(generateXml);
 
 const writeXml = async (options) => {
@@ -29,6 +29,8 @@ module.exports = async (options, cb) => {
   //  iconPath
   //  executable
   //  localInstall
+  //  enableUi (License.rtf must be in the root folder for extensions - ext)
+  //  runAfterInstall
 
   const xmlPath = await writeXml(options);
 

@@ -1,6 +1,6 @@
 {
   "name": "msi-packager-oneclick",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Build MSI (Windows Installer) packages on Mac and Linux",
   "main": "index.js",
   "bin": {

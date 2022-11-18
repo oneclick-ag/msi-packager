@@ -27,7 +27,6 @@ const installerFor = (components, options) => el('Wix', {
     Version: options.version,
     Manufacturer: options.manufacturer,
   }, [
-
     el('Property', {
       Id: 'PREVIOUSVERSIONSINSTALLED',
       Secure: 'yes',
@@ -44,19 +43,6 @@ const installerFor = (components, options) => el('Wix', {
       }),
     ]),
 
-    // options.runAfterInstall ? el('Property', {
-    //   Id: 'cmd',
-    //   Value: 'cmd.exe',
-    // }) : '',
-    //
-    // options.runAfterInstall ? el('CustomAction', {
-    //   Id: 'LaunchApplication',
-    //   ExeCommand: `/c start "" "%programfiles%\\${options.name}\\${options.executable}"`,
-    //   Execute: '',
-    //   Property: 'cmd',
-    //   Impersonate: 'yes',
-    // }) : '',
-    //
     el('InstallExecuteSequence', [
       el('RemoveExistingProducts', {
         Before: 'InstallInitialize',
@@ -65,10 +51,10 @@ const installerFor = (components, options) => el('Wix', {
         Action: 'EXECUTE_AFTER_INSTALL',
         After: 'InstallFinalize',
       }, ['NOT Installed']) : '',
-      options.runBeforeUninstall ? el('Custom', {
-        Action: 'EXECUTE_BEFORE_UNINSTALL',
-        Before: 'InstallInitialize',
-      }, ['(NOT UPGRADINGPRODUCTCODE) AND (REMOVE~="ALL")']) : '',
+      // options.runBeforeUninstall ? el('Custom', {
+      //   Action: 'EXECUTE_BEFORE_UNINSTALL',
+      //   After: 'InstallInitialize',
+      // }, ['REMOVE="ALL"']) : '',
     ]),
 
     options.runAfterInstall ? el('CustomAction', {
@@ -80,14 +66,14 @@ const installerFor = (components, options) => el('Wix', {
       Return: 'ignore',
     }) : '',
 
-    options.runBeforeUninstall ? el('CustomAction', {
-      Id: 'EXECUTE_BEFORE_UNINSTALL',
-      FileKey: options.runBeforeUninstall,
-      ExeCommand: '',
-      Execute: 'immediate',
-      Impersonate: 'yes',
-      Return: 'ignore',
-    }) : '',
+    // options.runBeforeUninstall ? el('CustomAction', {
+    //   Id: 'EXECUTE_BEFORE_UNINSTALL',
+    //   FileKey: options.runBeforeUninstall,
+    //   ExeCommand: '',
+    //   Execute: 'immediate',
+    //   Impersonate: 'yes',
+    //   Return: 'ignore',
+    // }) : '',
 
     el('Package', {
       InstallerVersion: '200',
