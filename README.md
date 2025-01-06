@@ -31,13 +31,13 @@ $ sudo apt-get install msitools
 ## Install [via npm](https://www.npmjs.com/package/msi-packager)
 
 ```bash
-$ npm install msi-packager
+$ npm install msi-packager-oneclick
 ```
 
 ## Node Example
 
 ```js
-var createMsi = require('./')
+var createMsi = require('msi-packager-oneclick')
 
 var options = {
 
